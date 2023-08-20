@@ -1,6 +1,5 @@
-<h1>
-The List of tasks:
-</h1>
+@extends('layouts.app')
+@section('title','The List of tasks')
 <?php
 /*
 @isset($name)
@@ -13,7 +12,7 @@ it's not normal to keep adding isset to code
 */
 ?>
 
-<div>
+@section('content')
     {{--
         instead of this I can use foreles
          @if(count($tasks))
@@ -36,4 +35,4 @@ it's not normal to keep adding isset to code
     @empty
         <div> You have done all your tasks!</div>
     @endforelse
-</div>
+@endsection
