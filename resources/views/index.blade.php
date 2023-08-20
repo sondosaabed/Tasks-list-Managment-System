@@ -1,26 +1,24 @@
+{{-- Use extends so that we could edit them in one place instead of many --}}
 @extends('layouts.app')
 @section('title','The List of tasks')
-<?php
-/*
-@isset($name)
+{{-- @isset($name)
     <div>
     The name is: {{$name}}
     </div>
 @endisset
 
-it's not normal to keep adding isset to code
-*/
-?>
+it's not normal to keep adding isset to code --}}
+
 
 @section('content')
     {{--
         instead of this I can use foreles
          @if(count($tasks))
-        <?php
-        /*
+        
+        
         <div> There are tasks:</div>
-        */
-        ?>
+        
+        
         @foreach ($tasks as $task)
             <div>{{$task-> title }}</div>
         @endforeach
