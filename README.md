@@ -1,5 +1,5 @@
 # Tasks List:
-In this project, a tasks management system is developed using Laravel framework. This project is part of Laravel 10 course work.
+In this project, a tasks management system is developed using Laravel framework. This project is part of Laravel 10 course work and E Microlearn Summer Internship.
 
 ## About Laravel
 
