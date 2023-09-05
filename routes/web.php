@@ -1,7 +1,7 @@
 <?php
 
 use Illuminate\Support\Facades\Route;
-use illuminate\Http\Response;
+use Illuminate\Http\Response;
 ## to use the response we nee dto add this lib
 /*
 |--------------------------------------------------------------------------
