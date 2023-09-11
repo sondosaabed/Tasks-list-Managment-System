@@ -91,6 +91,7 @@ Route::get('/tasks',function() {
     # in the blade tempalate we used isset better check if there is a vriable
     # use view to render the page
     return view('index', [
+      // Where,Select Queries Builders
       // We most of the time fetch by some sort in this case the lates
       //'tasks' => \App\Models\Task::latest() ->get()
       //let's say  Ionly want to show the completed tasks
@@ -100,6 +101,9 @@ Route::get('/tasks',function() {
     # if i pass an html tag here it will be escaped
     # to avoid the cross side scripting attack
 })->name('tasks.index');
+
+// Let's display a form 
+Route::view('/tasks/create', 'create');
 
 /*
 # generate the links for each one
