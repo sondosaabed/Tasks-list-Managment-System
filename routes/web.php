@@ -20,6 +20,9 @@ Route::get('/', function () {
 });
 */
 
+/*
+// Because I don't need the task anymore since I crated a model and 
+// will be using the db to fetch it's commneted out
 # here we have task class
 class Task
 {
@@ -74,7 +77,7 @@ $tasks = [
     '2023-03-04 12:00:00'
   ),
 ];
-
+*/
 # this is when we want to redirect 
 Route::get('/', function() {
     return redirect()->route('tasks.index');
@@ -82,12 +85,13 @@ Route::get('/', function() {
 
 # this end point will be used to show the tasks
 # because $tasks variable aanonymous function so we add a use stmt
-Route::get('/tasks',function() use($tasks) {
+Route::get('/tasks',function() {
+//use($tasks) { becuase we used an array before now use db
     # return 'Main page';
     # in the blade tempalate we used isset better check if there is a vriable
     # use view to render the page
     return view('index', [
-        'tasks' => $tasks
+        'tasks' => \App\Models\Task::all() // the all method is used to get all the data
     ]);# in this second argument the keys are the name sof the variables
     # if i pass an html tag here it will be escaped
     # to avoid the cross side scripting attack
