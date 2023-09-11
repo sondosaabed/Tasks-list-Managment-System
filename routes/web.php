@@ -103,7 +103,12 @@ Route::get('/tasks',function() {
 })->name('tasks.index');
 
 // Let's display a form 
-Route::view('/tasks/create', 'create');
+Route::view('/tasks/create', 'create')->name('tasks.create');
+
+Route::post('/tasks', function(){
+  //dd dump and dash?
+  dd('We have reach the store route');
+})->name('tasks.store');
 
 /*
 # generate the links for each one
