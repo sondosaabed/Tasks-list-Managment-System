@@ -13,8 +13,8 @@ class DatabaseSeeder extends Seeder
     public function run(): void
     {
         // To generate 10 users data on top of the existing data
-         \App\Models\User::factory(10)->create();
-
+        \App\Models\User::factory(10)->create();
+        \App\Models\Task::factory(20)->create();        
         // \App\Models\User::factory()->create([
         //     'name' => 'Test User',
         //     'email' => 'test@example.com',
