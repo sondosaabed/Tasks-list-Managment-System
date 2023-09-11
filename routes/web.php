@@ -110,7 +110,11 @@ Route::get('tasks/{id}', function ($id) use ($tasks){
 */
 
 Route::get('/tasks/{id}', function ($id){
-  return view('show', ['task'=> \App\Models\Task::find($id)]);
+  return view('show', [
+    //'task'=> \App\Models\Task::find($id)
+    // So that of not found in the db it will 404 instead of null
+    'task'=> \App\Models\Task::findOrFail($id)
+  ]);
 })->name('tasks.show');
 
 /*
