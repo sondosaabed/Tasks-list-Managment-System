@@ -1,7 +1,6 @@
-{{-- My task is hard --}}
 @extends('layouts.app')
 
-@section('title', 'Add Task')
+@section('title', 'Edit Task')
 
 @section('styles')
     <style>
@@ -13,18 +12,14 @@
 @endsection
 
 @section('content')
-    <form method="POST" action="{{ route('tasks.store') }}">
-    {{-- Cross Side request forgery 
-    sending request to a diffrent website on behaf of user
-    when they have active session 
-    creates tokens to protect users 490 error
-     must include this directive on every form  --}}
+    <form method="POST" action="{{ route('tasks.update', ['id' => $task->id]) }}">
     @csrf
+    @method('PUT')     {{-- Spoofing --}}
         <div>
             <label for="title">
             Title
             </label>
-            <input text="text" name="title" id="title"/>
+            <input text="text" name="title" id="title" value="{{ $task->title }}"/>
             @error('title')
                 <p class=".error-msg">{{ $message }}</p>
             @enderror
@@ -34,7 +29,7 @@
             <label for="description">
             Description
             </label>
-            <textarea name="description" id="description" rows="5"></textarea>
+            <textarea name="description" id="description" rows="5">{{ $task->description}}</textarea>
             @error('description')
                 <p class=".error-msg ">{{ $message }}</p>
             @enderror
@@ -44,14 +39,14 @@
             <label for="long_description">
             Long Description
             </label>
-            <textarea name="long_description" id="long_description" rows="10"></textarea>
+            <textarea name="long_description" id="long_description" rows="10">{{ $task->long_description}}</textarea>
             @error('long_description')
                 <p class=".error-msg ">{{ $message }}</p>
             @enderror
         </div>
         
         <div>
-            <button type="submit">Add Task</button>
+            <button type="submit">Edit Task</button>
         </div>
     </form>
 @endsection
