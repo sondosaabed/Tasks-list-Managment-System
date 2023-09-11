@@ -93,6 +93,7 @@ Route::get('/tasks',function() use($tasks) {
     # to avoid the cross side scripting attack
 })->name('tasks.index');
 
+/*
 # generate the links for each one
 Route::get('tasks/{id}', function ($id) use ($tasks){
     # to get the task by ID we will use some laravel magic using coolection object
@@ -105,6 +106,11 @@ Route::get('tasks/{id}', function ($id) use ($tasks){
     }
     
     return view('show', ['task'=> $task]);
+})->name('tasks.show');
+*/
+
+Route::get('/tasks/{id}', function ($id){
+  return view('show', ['task'=> \App\Models\Task::find($id)]);
 })->name('tasks.show');
 
 /*
