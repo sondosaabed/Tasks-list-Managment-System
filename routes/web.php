@@ -91,7 +91,11 @@ Route::get('/tasks',function() {
     # in the blade tempalate we used isset better check if there is a vriable
     # use view to render the page
     return view('index', [
-        'tasks' => \App\Models\Task::all() // the all method is used to get all the data
+      // We most of the time fetch by some sort in this case the lates
+      //'tasks' => \App\Models\Task::latest() ->get()
+      //let's say  Ionly want to show the completed tasks
+      'tasks'=> \App\Models\Task::latest()->where('completed', true)->get()
+       // 'tasks' => \App\Models\Task::all() // the all method is used to get all the data
     ]);# in this second argument the keys are the name sof the variables
     # if i pass an html tag here it will be escaped
     # to avoid the cross side scripting attack
