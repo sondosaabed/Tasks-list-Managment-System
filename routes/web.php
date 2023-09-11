@@ -1,7 +1,8 @@
 <?php
 
 use Illuminate\Support\Facades\Route;
-use Illuminate\Http\Response;
+//use Illuminate\Http\Response;
+use Illuminate\Http\Request;
 ## to use the response we nee dto add this lib
 /*
 |--------------------------------------------------------------------------
@@ -105,9 +106,9 @@ Route::get('/tasks',function() {
 // Let's display a form 
 Route::view('/tasks/create', 'create')->name('tasks.create');
 
-Route::post('/tasks', function(){
+Route::post('/tasks', function(Request $request){
   //dd dump and dash?
-  dd('We have reach the store route');
+  dd($request->all());
 })->name('tasks.store');
 
 /*
