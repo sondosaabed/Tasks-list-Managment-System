@@ -4,6 +4,7 @@
 
 <head>
     <title>Tasks List App</title>
+    @yield('styles')
 </head>
 
 <body>
@@ -14,5 +15,4 @@
         @yield('content')
     </div>
 </body>
-
 </html>
