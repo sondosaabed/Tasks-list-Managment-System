@@ -124,7 +124,8 @@ Route::post('/tasks', function(Request $request){
 
   $task->save(); // will update or insert quesry to the table
 
-  return redirect()->route('tasks.show', ['id' => $task->id]);
+  return redirect()->route('tasks.show', ['id' => $task->id])
+    ->with('success', 'Task created successfully!'); // add a flash message
 })->name('tasks.store');
 
 /*

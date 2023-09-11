@@ -12,6 +12,9 @@
     <h1>@yield('title')</h1>
     <div>
     {{-- this is a directive  --}}
+        @if(session()->has('success'))
+            <div>{{ session('success') }}</div>
+        @endif
         @yield('content')
     </div>
 </body>
