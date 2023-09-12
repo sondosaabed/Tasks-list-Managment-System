@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Requests\TaskRequest;
 use App\Models\Task;
 use Illuminate\Support\Facades\Route;
 //use Illuminate\Http\Response;
@@ -117,45 +118,63 @@ Route::get('/tasks/{task}/edit', function (Task $task){
   ]);
 })->name('tasks.edit');
 
-Route::post('/tasks', function(Request $request){
+Route::post('/tasks', function(TaskRequest $request){//Request $request){
   //dd dump and dash?
   //dd($request->all());
   // cretae an array of the submitted based on the validatiopn
+
+  /*
+  This is commented because I am writing instead using the PHP reqeust
+  It is the class under task request
+
   $data = $request->validate([
     'title' => 'required|max:255',
     'description' => 'required',
     'long_description' => 'required'
   ]);
-
+  
+  $data = ;// it will first validate it will not pass
   $task = new Task;
   $task->title = $data['title'];
   $task->description = $data['description'];
   $task->long_description = $data['long_description'];
 
   $task->save(); // will update or insert quesry to the table
+  
+  */
+  $task = Task::create($request->validated());
 
   return redirect()->route('tasks.show', ['id' => $task->id])
     ->with('success', 'Task created successfully!'); // add a flash message
 })->name('tasks.store');
 
 
-Route::put('/tasks/{task}', function(Task $task, Request $request){
+Route::put('/tasks/{task}', function(Task $task, TaskRequest $request){
   //dd dump and dash?
   //dd($request->all());
   // cretae an array of the submitted based on the validatiopn
+  
+  /*
+  This commented because the task request class will validate instead
+
   $data = $request->validate([
     'title' => 'required|max:255',
     'description' => 'required',
     'long_description' => 'required'
   ]);
+  */
   //$task = Task::findOrFail($id); because it will be already loaded using model binding
   
+  /*
+  $data = $request->validated();
   $task->title = $data['title'];
   $task->description = $data['description'];
   $task->long_description = $data['long_description'];
 
   $task->save(); // will update or insert quesry to the table
+  */
 
+  $task -> update($request->validated());
   return redirect()->route('tasks.show', ['id' => $task->id])
     ->with('success', 'Task updated successfully!'); // add a flash message
 })->name('tasks.update');
