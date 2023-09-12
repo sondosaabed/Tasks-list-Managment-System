@@ -144,7 +144,7 @@ Route::post('/tasks', function(TaskRequest $request){//Request $request){
   */
   $task = Task::create($request->validated());
 
-  return redirect()->route('tasks.show', ['id' => $task->id])
+  return redirect()->route('tasks.show', ['task' => $task->id])
     ->with('success', 'Task created successfully!'); // add a flash message
 })->name('tasks.store');
 
