@@ -107,11 +107,13 @@ Route::get('/tasks',function() {
 // Let's display a form 
 Route::view('/tasks/create', 'create')->name('tasks.create');
 
-Route::get('/tasks/{id}/edit', function ($id){
+Route::get('/tasks/{task}/edit', function (Task $task){
   return view('edit', [
     //'task'=> \App\Models\Task::find($id)
     // So that of not found in the db it will 404 instead of null
-    'task'=> Task::findOrFail($id)
+    //'task'=> Task::findOrFail($id)
+    // Binding that we don't have to worry abot the fetching
+    'task'=>$task
   ]);
 })->name('tasks.edit');
 
@@ -137,7 +139,7 @@ Route::post('/tasks', function(Request $request){
 })->name('tasks.store');
 
 
-Route::put('/tasks/{id}', function($id, Request $request){
+Route::put('/tasks/{task}', function(Task $task, Request $request){
   //dd dump and dash?
   //dd($request->all());
   // cretae an array of the submitted based on the validatiopn
@@ -146,8 +148,8 @@ Route::put('/tasks/{id}', function($id, Request $request){
     'description' => 'required',
     'long_description' => 'required'
   ]);
-
-  $task = Task::findOrFail($id);
+  //$task = Task::findOrFail($id); because it will be already loaded using model binding
+  
   $task->title = $data['title'];
   $task->description = $data['description'];
   $task->long_description = $data['long_description'];
@@ -174,11 +176,12 @@ Route::get('tasks/{id}', function ($id) use ($tasks){
 })->name('tasks.show');
 */
 
-Route::get('/tasks/{id}', function ($id){
+Route::get('/tasks/{task}', function (Task $task){
   return view('show', [
     //'task'=> \App\Models\Task::find($id)
     // So that of not found in the db it will 404 instead of null
-    'task'=> Task::findOrFail($id)
+    //'task'=> Task::findOrFail($id)
+    'task' =>$task
   ]);
 })->name('tasks.show');
 
