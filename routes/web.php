@@ -212,6 +212,16 @@ Route::delete('/tasks/{task}', function(Task $task){
       ->with('success', 'Task deleted successfully!');
 })->name('tasks.destroy');
 
+Route::put('tasks/{task}/toggle-complete', function(Task $task){
+  /*
+  instead let's make it using the model
+  $task->completed = !$task->completed;
+  $task->save();
+  */
+  $task->toggleComplete();
+  
+  return redirect()->back()->with('success', 'Task updated successfully!');
+})->name('tasks.toggle-complete');
 /*
 
 now I have two pages when a spectic URL is typed
