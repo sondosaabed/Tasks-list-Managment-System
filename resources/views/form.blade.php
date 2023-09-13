@@ -5,7 +5,7 @@ structure
  --}}
 @extends('layouts.app')
 
-@section('title',isset($task) ? 'Edit Task': 'Add Task')
+@section('title',isset($task) ? 'Edit Task' : 'Add Task')
 
 @section('styles')
     <style>
