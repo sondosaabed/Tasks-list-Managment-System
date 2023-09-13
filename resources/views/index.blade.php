@@ -27,7 +27,8 @@ it's not normal to keep adding isset to code --}}
     @endif --}}
     
     <nav class="mb-4">
-        <a href="{{ route('tasks.create')}}" class="font-medium text-gray-700 underline decoration-pink-500">Add Task</a>
+        <a href="{{ route('tasks.create')}}" 
+        class="link">Add Task</a>
     </nav>
     @forelse ($tasks as $task)
         <div>
