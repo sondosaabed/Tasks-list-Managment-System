@@ -33,4 +33,8 @@ it's not normal to keep adding isset to code --}}
     @empty
         <div> You have done all your tasks!</div>
     @endforelse
+
+    @if($tasks->count())
+        {{ $tasks->links()}}  
+    @endif
 @endsection

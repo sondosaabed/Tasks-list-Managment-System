@@ -98,7 +98,9 @@ Route::get('/tasks',function() {
       // We most of the time fetch by some sort in this case the lates
       //'tasks' => \App\Models\Task::latest() ->get()
       //let's say  Ionly want to show the completed tasks
-      'tasks'=> Task::latest()->where('completed', true)->get()
+//      'tasks'=> Task::latest()->where('completed', true)->get()
+      'tasks'=> Task::latest()->paginate() //to devide into pages
+
        // 'tasks' => \App\Models\Task::all() // the all method is used to get all the data
     ]);# in this second argument the keys are the name sof the variables
     # if i pass an html tag here it will be escaped
