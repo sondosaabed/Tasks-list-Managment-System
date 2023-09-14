@@ -107,8 +107,14 @@ Route::get('/tasks',function() {
     # to avoid the cross side scripting attack
 })->name('tasks.index');
 
-// Let's display a form 
-Route::view('/tasks/create', 'create')->name('tasks.create');
+Route::get('/tasks/{task}', function (Task $task){
+  return view('show', [
+    //'task'=> \App\Models\Task::find($id)
+    // So that of not found in the db it will 404 instead of null
+    //'task'=> Task::findOrFail($id)
+    'task' =>$task
+  ]);
+})->name('tasks.show');
 
 Route::get('/tasks/{task}/edit', function (Task $task){
   return view('edit', [
@@ -119,6 +125,9 @@ Route::get('/tasks/{task}/edit', function (Task $task){
     'task'=>$task
   ]);
 })->name('tasks.edit');
+
+// Let's display a form 
+Route::view('/tasks/create', 'create')->name('tasks.create');
 
 Route::post('/tasks', function(TaskRequest $request){//Request $request){
   //dd dump and dash?
@@ -177,7 +186,7 @@ Route::put('/tasks/{task}', function(Task $task, TaskRequest $request){
   */
 
   $task -> update($request->validated());
-  return redirect()->route('tasks.show', ['id' => $task->id])
+  return redirect()->route('tasks.show', ['task' => $task->id])
     ->with('success', 'Task updated successfully!'); // add a flash message
 })->name('tasks.update');
 
@@ -196,15 +205,6 @@ Route::get('tasks/{id}', function ($id) use ($tasks){
     return view('show', ['task'=> $task]);
 })->name('tasks.show');
 */
-
-Route::get('/tasks/{task}', function (Task $task){
-  return view('show', [
-    //'task'=> \App\Models\Task::find($id)
-    // So that of not found in the db it will 404 instead of null
-    //'task'=> Task::findOrFail($id)
-    'task' =>$task
-  ]);
-})->name('tasks.show');
 
 Route::delete('/tasks/{task}', function(Task $task){
     $task->delete();
@@ -279,5 +279,5 @@ So all the routes that doesn't exist will redirct me to this fallback functions
 */
 
 Route::fallback(function(){
-    return 'Still got somewhere!';
+    return 'MMMMMMMMMMM get back!';
 });

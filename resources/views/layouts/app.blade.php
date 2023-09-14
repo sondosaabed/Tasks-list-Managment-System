@@ -3,7 +3,7 @@
 <html>
 
 <head>
-    <title>Tasks List App</title>
+    <title>Tasks List</title>
     <script src="https://cdn.tailwindcss.com"></script>
     <script src="//unpkg.com/alpinejs" defer></script>
     {{-- blade-formatter-disable --}}

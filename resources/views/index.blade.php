@@ -27,7 +27,7 @@ it's not normal to keep adding isset to code --}}
     @endif --}}
     
     <nav class="mb-4">
-        <a href="{{ route('tasks.create')}}" 
+        <a href="{{ route('tasks.create') }}" 
         class="link">Add Task</a>
     </nav>
     @forelse ($tasks as $task)
@@ -41,6 +41,8 @@ it's not normal to keep adding isset to code --}}
     @endforelse
 
     @if($tasks->count())
-        {{ $tasks->links()}}  
+        <nav class="mt-4">
+        {{ $tasks->links()}}
+        </nav>  
     @endif
 @endsection

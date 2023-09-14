@@ -8,7 +8,8 @@ structure
 @section('title',isset($task) ? 'Edit Task' : 'Add Task')
 
 @section('content')
-    <form method="POST" action="{{ isset($task) ? route('tasks.update', ['task'=>$task->id]) : route('tasks.store') }}">
+    <form method="POST" 
+    action="{{ isset($task) ? route('tasks.update', ['task'=>$task->id]) : route('tasks.store') }}">
     {{-- Cross Side request forgery 
     sending request to a diffrent website on behaf of user
     when they have active session 
