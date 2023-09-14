@@ -39,7 +39,10 @@
     <div>
     {{-- this is a directive  --}}
         @if(session()->has('success'))
-            <div>{{ session('success') }}</div>
+            <div class="mb-10 rounded border border-green-400 bg-green-100 px-4 py-3">
+            <strong class="font-bold">{{ session('success') }}</strong>
+            <div></div>
+            </div>
         @endif
         @yield('content')
     </div>
