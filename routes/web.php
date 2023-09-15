@@ -17,7 +17,70 @@ use Illuminate\Http\Request;
 |
 */
 
-/*
+  Route::get('/', function() {
+    return redirect()->route('tasks.index');
+  });
+
+  Route::get('/tasks',function() {
+      return view('index', [
+        'tasks'=> Task::latest()->paginate() //to devide into pages
+      ]);
+  })->name('tasks.index');
+
+
+  Route::get('/tasks/{task}', function (Task $task){
+    return view('show', [
+      'task' =>$task
+    ]);
+  })->name('tasks.show');
+
+  Route::get('/tasks/{task}/edit', function (Task $task){
+    return view('edit', [
+      'task'=>$task
+    ]);
+  })->name('tasks.edit');
+
+  Route::view('/tasks/create', 'create')->name('tasks.create');
+
+  Route::post('/tasks', function(TaskRequest $request){
+    $task = Task::create($request->validated());
+    return redirect()->route('tasks.show', ['task' => $task->id])
+      ->with('success', 'Task created successfully!'); 
+  })->name('tasks.store');
+
+  Route::put('/tasks/{task}', function(Task $task, TaskRequest $request){  
+    $task -> update($request->validated());
+    return redirect()->route('tasks.show', ['task' => $task->id])
+      ->with('success', 'Task updated successfully!'); 
+  })->name('tasks.update');
+
+  Route::delete('/tasks/{task}', function(Task $task){
+    $task->delete();
+    return redirect()->route('tasks.index')
+      ->with('success', 'Task deleted successfully!');
+  })->name('tasks.destroy');
+
+  Route::put('tasks/{task}/toggle-complete', function(Task $task){
+  $task->toggleComplete();
+    return redirect()->back()->with('success', 'Task updated successfully!');
+  })->name('tasks.toggle-complete');
+
+  Route::fallback(function(){
+    return 'MMMMMMMMMMM get back!';
+  });
+
+
+
+
+
+
+
+  /**
+   * ---------------------This part is comments on my code that I wrote while watching the course
+   * 
+   */
+
+   /*
 Route::get('/', function () {
     return view('Main page');
 });
@@ -81,114 +144,106 @@ $tasks = [
   ),
 ];
 */
-# this is when we want to redirect 
-Route::get('/', function() {
-    return redirect()->route('tasks.index');
-});
-
 # this end point will be used to show the tasks
 # because $tasks variable aanonymous function so we add a use stmt
-Route::get('/tasks',function() {
+//Route::get('/tasks',function() {
 //use($tasks) { becuase we used an array before now use db
     # return 'Main page';
     # in the blade tempalate we used isset better check if there is a vriable
     # use view to render the page
-    return view('index', [
+//    return view('index', [
       // Where,Select Queries Builders
       // We most of the time fetch by some sort in this case the lates
       //'tasks' => \App\Models\Task::latest() ->get()
       //let's say  Ionly want to show the completed tasks
 //      'tasks'=> Task::latest()->where('completed', true)->get()
-      'tasks'=> Task::latest()->paginate() //to devide into pages
+//      'tasks'=> Task::latest()->paginate() //to devide into pages
 
        // 'tasks' => \App\Models\Task::all() // the all method is used to get all the data
-    ]);# in this second argument the keys are the name sof the variables
+//    ]);# in this second argument the keys are the name sof the variables
     # if i pass an html tag here it will be escaped
     # to avoid the cross side scripting attack
-})->name('tasks.index');
+//})->name('tasks.index');
 
-Route::get('/tasks/{task}', function (Task $task){
-  return view('show', [
-    //'task'=> \App\Models\Task::find($id)
-    // So that of not found in the db it will 404 instead of null
-    //'task'=> Task::findOrFail($id)
-    'task' =>$task
-  ]);
-})->name('tasks.show');
+// Route::get('/tasks/{task}', function (Task $task){
+//   return view('show', [
+//     //'task'=> \App\Models\Task::find($id)
+//     // So that of not found in the db it will 404 instead of null
+//     //'task'=> Task::findOrFail($id)
+//     'task' =>$task
+//   ]);
+// })->name('tasks.show');
 
-Route::get('/tasks/{task}/edit', function (Task $task){
-  return view('edit', [
-    //'task'=> \App\Models\Task::find($id)
-    // So that of not found in the db it will 404 instead of null
-    //'task'=> Task::findOrFail($id)
-    // Binding that we don't have to worry abot the fetching
-    'task'=>$task
-  ]);
-})->name('tasks.edit');
+// Route::get('/tasks/{task}/edit', function (Task $task){
+//   return view('edit', [
+//     //'task'=> \App\Models\Task::find($id)
+//     // So that of not found in the db it will 404 instead of null
+//     //'task'=> Task::findOrFail($id)
+//     // Binding that we don't have to worry abot the fetching
+//     'task'=>$task
+//   ]);
+// })->name('tasks.edit');
 
-// Let's display a form 
-Route::view('/tasks/create', 'create')->name('tasks.create');
+// Route::post('/tasks', function(TaskRequest $request){//Request $request){
+//   //dd dump and dash?
+//   //dd($request->all());
+//   // cretae an array of the submitted based on the validatiopn
 
-Route::post('/tasks', function(TaskRequest $request){//Request $request){
-  //dd dump and dash?
-  //dd($request->all());
-  // cretae an array of the submitted based on the validatiopn
+//   /*
+//   This is commented because I am writing instead using the PHP reqeust
+//   It is the class under task request
 
-  /*
-  This is commented because I am writing instead using the PHP reqeust
-  It is the class under task request
-
-  $data = $request->validate([
-    'title' => 'required|max:255',
-    'description' => 'required',
-    'long_description' => 'required'
-  ]);
+//   $data = $request->validate([
+//     'title' => 'required|max:255',
+//     'description' => 'required',
+//     'long_description' => 'required'
+//   ]);
   
-  $data = ;// it will first validate it will not pass
-  $task = new Task;
-  $task->title = $data['title'];
-  $task->description = $data['description'];
-  $task->long_description = $data['long_description'];
+//   $data = ;// it will first validate it will not pass
+//   $task = new Task;
+//   $task->title = $data['title'];
+//   $task->description = $data['description'];
+//   $task->long_description = $data['long_description'];
 
-  $task->save(); // will update or insert quesry to the table
+//   $task->save(); // will update or insert quesry to the table
   
-  */
-  $task = Task::create($request->validated());
+//   */
+//   $task = Task::create($request->validated());
 
-  return redirect()->route('tasks.show', ['task' => $task->id])
-    ->with('success', 'Task created successfully!'); // add a flash message
-})->name('tasks.store');
+//   return redirect()->route('tasks.show', ['task' => $task->id])
+//     ->with('success', 'Task created successfully!'); // add a flash message
+// })->name('tasks.store');
 
 
-Route::put('/tasks/{task}', function(Task $task, TaskRequest $request){
-  //dd dump and dash?
-  //dd($request->all());
-  // cretae an array of the submitted based on the validatiopn
+// Route::put('/tasks/{task}', function(Task $task, TaskRequest $request){
+//   //dd dump and dash?
+//   //dd($request->all());
+//   // cretae an array of the submitted based on the validatiopn
   
-  /*
-  This commented because the task request class will validate instead
+//   /*
+//   This commented because the task request class will validate instead
 
-  $data = $request->validate([
-    'title' => 'required|max:255',
-    'description' => 'required',
-    'long_description' => 'required'
-  ]);
-  */
-  //$task = Task::findOrFail($id); because it will be already loaded using model binding
+//   $data = $request->validate([
+//     'title' => 'required|max:255',
+//     'description' => 'required',
+//     'long_description' => 'required'
+//   ]);
+//   */
+//   //$task = Task::findOrFail($id); because it will be already loaded using model binding
   
-  /*
-  $data = $request->validated();
-  $task->title = $data['title'];
-  $task->description = $data['description'];
-  $task->long_description = $data['long_description'];
+//   /*
+//   $data = $request->validated();
+//   $task->title = $data['title'];
+//   $task->description = $data['description'];
+//   $task->long_description = $data['long_description'];
 
-  $task->save(); // will update or insert quesry to the table
-  */
+//   $task->save(); // will update or insert quesry to the table
+//   */
 
-  $task -> update($request->validated());
-  return redirect()->route('tasks.show', ['task' => $task->id])
-    ->with('success', 'Task updated successfully!'); // add a flash message
-})->name('tasks.update');
+//   $task -> update($request->validated());
+//   return redirect()->route('tasks.show', ['task' => $task->id])
+//     ->with('success', 'Task updated successfully!'); // add a flash message
+// })->name('tasks.update');
 
 /*
 # generate the links for each one
@@ -206,22 +261,22 @@ Route::get('tasks/{id}', function ($id) use ($tasks){
 })->name('tasks.show');
 */
 
-Route::delete('/tasks/{task}', function(Task $task){
-    $task->delete();
-    return redirect()->route('tasks.index')
-      ->with('success', 'Task deleted successfully!');
-})->name('tasks.destroy');
+// Route::delete('/tasks/{task}', function(Task $task){
+//     $task->delete();
+//     return redirect()->route('tasks.index')
+//       ->with('success', 'Task deleted successfully!');
+// })->name('tasks.destroy');
 
-Route::put('tasks/{task}/toggle-complete', function(Task $task){
-  /*
-  instead let's make it using the model
-  $task->completed = !$task->completed;
-  $task->save();
-  */
-  $task->toggleComplete();
+// Route::put('tasks/{task}/toggle-complete', function(Task $task){
+//   /*
+//   instead let's make it using the model
+//   $task->completed = !$task->completed;
+//   $task->save();
+//   */
+//   $task->toggleComplete();
   
-  return redirect()->back()->with('success', 'Task updated successfully!');
-})->name('tasks.toggle-complete');
+//   return redirect()->back()->with('success', 'Task updated successfully!');
+// })->name('tasks.toggle-complete');
 /*
 
 now I have two pages when a spectic URL is typed
@@ -277,7 +332,3 @@ Route::get('/hallo0', function(){
 what if there is more optons
 So all the routes that doesn't exist will redirct me to this fallback functions
 */
-
-Route::fallback(function(){
-    return 'MMMMMMMMMMM get back!';
-});
