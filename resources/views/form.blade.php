@@ -8,24 +8,25 @@ structure
 @section('title',isset($task) ? 'Edit Task' : 'Add Task')
 
 @section('content')
-    <form method="POST" 
-    action="{{ isset($task) ? route('tasks.update', ['task'=>$task->id]) : route('tasks.store') }}">
-    {{-- Cross Side request forgery 
+{{-- Cross Side request forgery 
     sending request to a diffrent website on behaf of user
     when they have active session 
     creates tokens to protect users 490 error
      must include this directive on every form  --}}
+        
+    <form method="POST"
+    action="{{ isset($task) ? route('tasks.update', ['task' => $task->id]) : route('tasks.store') }}">
     @csrf
-    @isset($task)
-        @method('PUT')
-    @endisset
+        @isset($task)
+            @method('PUT')
+        @endisset
         <div class="mb-4">
             <label for="title">
-            Title
+                Title
             </label>
-            <input text="text" name="title" id="title" 
+            <input text="text" name="title" id="title"
             @class(['border-red-500' => $errors->has('title')])
-            value="{{ $task->title ?? old('title') }}"/>
+            value="{{ $task->title ?? old('title') }}" />
             @error('title')
                 <p class="error">{{ $message }}</p>
             @enderror

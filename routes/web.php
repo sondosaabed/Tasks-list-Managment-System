@@ -23,24 +23,24 @@ use Illuminate\Http\Request;
 
   Route::get('/tasks',function() {
       return view('index', [
-        'tasks'=> Task::latest()->paginate() //to devide into pages
+        'tasks'=> Task::latest()->paginate(10) //to devide into pages
       ]);
   })->name('tasks.index');
 
-
-  Route::get('/tasks/{task}', function (Task $task){
-    return view('show', [
-      'task' =>$task
-    ]);
-  })->name('tasks.show');
+  Route::view('/tasks/create', 'create')
+    ->name('tasks.create');
 
   Route::get('/tasks/{task}/edit', function (Task $task){
     return view('edit', [
       'task'=>$task
     ]);
   })->name('tasks.edit');
-
-  Route::view('/tasks/create', 'create')->name('tasks.create');
+  
+  Route::get('/tasks/{task}', function (Task $task){
+    return view('show', [
+      'task' =>$task
+    ]);
+  })->name('tasks.show');
 
   Route::post('/tasks', function(TaskRequest $request){
     $task = Task::create($request->validated());
